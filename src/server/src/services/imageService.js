@@ -73,15 +73,18 @@ class ImageService {
       const captureData = await db.getFullCaptureData(capture.id);
       if (captureData && captureData.imageData) {
         try {
-          // Always fetch temperature history for the 7-day chart
-          const temperatureHistory = await db.getTemperatureHistory(capture.id);
+          // Fetch temperature history for both charts
+          const [temperatureHistory, temperatureHistory30] = await Promise.all([
+            db.getTemperatureHistory(capture.id),
+            db.getTemperatureHistory30Days(capture.id)
+          ]);
 
           // Apply overlay to image before writing
           const overlayedImage = await applyOverlayToBuffer(
             captureData.imageData,
             captureData.weather,
             captureData.date,
-            { temperatureHistory }
+            { temperatureHistory, temperatureHistory30 }
           );
           const filePath = path.join(tempDir, `${capture.id}.jpg`);
           await fs.writeFile(filePath, overlayedImage);
@@ -116,15 +119,18 @@ class ImageService {
       const captureData = await db.getFullCaptureData(capture.id);
       if (captureData && captureData.imageData) {
         try {
-          // Always fetch temperature history for the 7-day chart
-          const temperatureHistory = await db.getTemperatureHistory(capture.id);
+          // Fetch temperature history for both charts
+          const [temperatureHistory, temperatureHistory30] = await Promise.all([
+            db.getTemperatureHistory(capture.id),
+            db.getTemperatureHistory30Days(capture.id)
+          ]);
 
           // Apply overlay to image before writing
           const overlayedImage = await applyOverlayToBuffer(
             captureData.imageData,
             captureData.weather,
             captureData.date,
-            { temperatureHistory }
+            { temperatureHistory, temperatureHistory30 }
           );
           const filePath = path.join(tempDir, `${capture.id}.jpg`);
           await fs.writeFile(filePath, overlayedImage);
@@ -197,6 +203,13 @@ class ImageService {
    */
   async getTemperatureHistory(captureId) {
     return await db.getTemperatureHistory(captureId);
+  }
+
+  /**
+   * Get temperature history for a capture (last 30 days)
+   */
+  async getTemperatureHistory30Days(captureId) {
+    return await db.getTemperatureHistory30Days(captureId);
   }
 }
 
