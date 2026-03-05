@@ -6,6 +6,7 @@ import os
 import mysql.connector
 from mysql.connector import Error
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from typing import Optional, Dict
 import io
 
@@ -99,7 +100,7 @@ def save_capture(
         conn = get_connection()
         cursor = conn.cursor()
 
-        now = datetime.now()
+        now = datetime.now(ZoneInfo('Europe/Madrid'))
         capture_date = now.date()
         capture_time = now.time()
 

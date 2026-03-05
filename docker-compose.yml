@@ -38,6 +38,7 @@ services:
       - DB_NAME=${DB_NAME:-webarenales}
       - DB_USER=${DB_USER:-webarenales}
       - DB_PASSWORD=${DB_PASSWORD:-webarenalespassword}
+      - TZ=Europe/Madrid
     depends_on:
       mariadb:
         condition: service_healthy

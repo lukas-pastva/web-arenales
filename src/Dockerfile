@@ -74,6 +74,7 @@ ENV PORT=3000
 ENV OUTPUT_DIR=/data
 ENV TARGET_URL=https://www.algarapictures.com/webcam
 ENV PYTHONUNBUFFERED=1
+ENV TZ=Europe/Madrid
 
 # Expose port
 EXPOSE 3000

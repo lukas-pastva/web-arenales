@@ -85,7 +85,7 @@ def fetch_weather_data(city: str) -> Optional[Dict]:
         f"?latitude={coords['lat']}&longitude={coords['lon']}"
         f"&current=temperature_2m"
         f"&daily=sunrise,sunset"
-        f"&timezone=auto"
+        f"&timezone=Europe%2FMadrid"
     )
 
     try:
