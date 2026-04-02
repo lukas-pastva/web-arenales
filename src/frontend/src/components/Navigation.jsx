@@ -4,8 +4,6 @@ import './Navigation.css';
 
 const navItems = [
   { path: '/latest', label: 'Latest', icon: '\u25C9' },
-  { path: '/daily-images', label: 'Daily Images', icon: '\u25A6' },
-  { path: '/daily-videos', label: 'Daily Videos', icon: '\u25B6' },
   { path: '/daylight-videos', label: 'Daylight', icon: '\u2600' },
   { path: '/combined-24h', label: 'Combined 24h', icon: '\u29BE' },
   { path: '/combined-daylight', label: 'Combined Daylight', icon: '\u25D0' },

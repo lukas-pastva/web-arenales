@@ -166,6 +166,37 @@ input:disabled + .toggle-slider {
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
+/* Admin buttons */
+.admin-buttons {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.admin-button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--surface-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out),
+              background var(--duration-fast) var(--ease-out);
+}
+
+.admin-button:hover {
+  border-color: var(--accent);
+  background: var(--surface-3);
+}
+
+.admin-button-icon {
+  font-size: var(--text-base);
+}
+
 /* Info section */
 .settings-info {
   padding: var(--space-lg);

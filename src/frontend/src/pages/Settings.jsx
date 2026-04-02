@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Settings.css';
 
 function Settings() {
+  const navigate = useNavigate();
   const [settings, setSettings] = useState({
     showChart: false,
     sunriseOffsetMinutes: 0,
@@ -167,6 +169,25 @@ function Settings() {
             {message.text}
           </div>
         )}
+      </div>
+
+      <div className="settings-container card">
+        <div className="settings-section">
+          <h2 className="section-title">Admin</h2>
+          <p className="section-description">
+            Manage raw daily captures and generated daily videos.
+          </p>
+          <div className="admin-buttons">
+            <button className="admin-button" onClick={() => navigate('/daily-images')}>
+              <span className="admin-button-icon">{'\u25A6'}</span>
+              Daily Images
+            </button>
+            <button className="admin-button" onClick={() => navigate('/daily-videos')}>
+              <span className="admin-button-icon">{'\u25B6'}</span>
+              Daily Videos
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="settings-info card">
