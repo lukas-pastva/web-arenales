@@ -186,6 +186,10 @@ function Settings() {
               <span className="admin-button-icon">{'\u25B6'}</span>
               Daily Videos
             </button>
+            <button className="admin-button" onClick={() => navigate('/daylight-videos')}>
+              <span className="admin-button-icon">{'\u2600'}</span>
+              Daylight Videos
+            </button>
           </div>
         </div>
       </div>
