@@ -57,31 +57,35 @@ function Navigation() {
             <span className="bottombar-label">{label}</span>
           </NavLink>
         ))}
-        <button
-          className={`bottombar-item bottombar-more ${moreOpen ? 'active' : ''}`}
-          onClick={() => setMoreOpen(!moreOpen)}
-          aria-label="More navigation items"
-        >
-          <span className="bottombar-icon">{'\u22EF'}</span>
-          <span className="bottombar-label">More</span>
-        </button>
-
-        {moreOpen && (
+        {overflowItems.length > 0 && (
           <>
-            <div className="overflow-backdrop" onClick={() => setMoreOpen(false)} />
-            <div className="overflow-menu">
-              {overflowItems.map(({ path, label, icon }) => (
-                <NavLink
-                  key={path}
-                  to={path}
-                  className={({ isActive }) => `overflow-item ${isActive ? 'active' : ''}`}
-                  onClick={() => setMoreOpen(false)}
-                >
-                  <span className="overflow-icon">{icon}</span>
-                  <span className="overflow-label">{label}</span>
-                </NavLink>
-              ))}
-            </div>
+            <button
+              className={`bottombar-item bottombar-more ${moreOpen ? 'active' : ''}`}
+              onClick={() => setMoreOpen(!moreOpen)}
+              aria-label="More navigation items"
+            >
+              <span className="bottombar-icon">{'\u22EF'}</span>
+              <span className="bottombar-label">More</span>
+            </button>
+
+            {moreOpen && (
+              <>
+                <div className="overflow-backdrop" onClick={() => setMoreOpen(false)} />
+                <div className="overflow-menu">
+                  {overflowItems.map(({ path, label, icon }) => (
+                    <NavLink
+                      key={path}
+                      to={path}
+                      className={({ isActive }) => `overflow-item ${isActive ? 'active' : ''}`}
+                      onClick={() => setMoreOpen(false)}
+                    >
+                      <span className="overflow-icon">{icon}</span>
+                      <span className="overflow-label">{label}</span>
+                    </NavLink>
+                  ))}
+                </div>
+              </>
+            )}
           </>
         )}
       </nav>
