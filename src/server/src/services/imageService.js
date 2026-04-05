@@ -75,18 +75,15 @@ class ImageService {
       const captureData = await db.getFullCaptureData(capture.id);
       if (captureData && captureData.imageData) {
         try {
-          // Fetch temperature history for both charts
-          const [temperatureHistory, temperatureHistory30] = await Promise.all([
-            db.getTemperatureHistory(capture.id),
-            db.getTemperatureHistory30Days(capture.id)
-          ]);
+          // Fetch temperature history for chart
+          const temperatureHistory30 = await db.getTemperatureHistory30Days(capture.id);
 
           // Apply overlay to image before writing
           const overlayedImage = await applyOverlayToBuffer(
             captureData.imageData,
             captureData.weather,
             captureData.date,
-            { temperatureHistory, temperatureHistory30 }
+            { temperatureHistory30 }
           );
           const filePath = path.join(tempDir, `${capture.id}.jpg`);
           await fs.writeFile(filePath, overlayedImage);
@@ -121,18 +118,15 @@ class ImageService {
       const captureData = await db.getFullCaptureData(capture.id);
       if (captureData && captureData.imageData) {
         try {
-          // Fetch temperature history for both charts
-          const [temperatureHistory, temperatureHistory30] = await Promise.all([
-            db.getTemperatureHistory(capture.id),
-            db.getTemperatureHistory30Days(capture.id)
-          ]);
+          // Fetch temperature history for chart
+          const temperatureHistory30 = await db.getTemperatureHistory30Days(capture.id);
 
           // Apply overlay to image before writing
           const overlayedImage = await applyOverlayToBuffer(
             captureData.imageData,
             captureData.weather,
             captureData.date,
-            { temperatureHistory, temperatureHistory30 }
+            { temperatureHistory30 }
           );
           const filePath = path.join(tempDir, `${capture.id}.jpg`);
           await fs.writeFile(filePath, overlayedImage);
@@ -198,13 +192,6 @@ class ImageService {
    */
   async getSunTimesForDate(date) {
     return await db.getSunTimesForDate(date);
-  }
-
-  /**
-   * Get temperature history for a capture (last 7 days)
-   */
-  async getTemperatureHistory(captureId) {
-    return await db.getTemperatureHistory(captureId);
   }
 
   /**

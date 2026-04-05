@@ -46,13 +46,9 @@ router.get('/data/:id/overlay', async (req, res) => {
     const settings = getOverlaySettings();
 
     // Fetch temperature history if chart is enabled
-    let temperatureHistory = null;
     let temperatureHistory30 = null;
     if (settings.showChart) {
-      [temperatureHistory, temperatureHistory30] = await Promise.all([
-        imageService.getTemperatureHistory(captureId),
-        imageService.getTemperatureHistory30Days(captureId)
-      ]);
+      temperatureHistory30 = await imageService.getTemperatureHistory30Days(captureId);
     }
 
     // Apply overlay to image with options
@@ -62,7 +58,6 @@ router.get('/data/:id/overlay', async (req, res) => {
       captureData.date,
       {
         showChart: settings.showChart,
-        temperatureHistory,
         temperatureHistory30
       }
     );

@@ -394,53 +394,6 @@ export async function deleteAllCaptures() {
 }
 
 /**
- * Get temperature history for the last 7 days from a given capture
- * Returns sampled data (one point per 2 hours) for chart display
- * @param {number} captureId - The reference capture ID
- * @returns {Promise<Array>} Array of temperature data points
- */
-export async function getTemperatureHistory(captureId) {
-  const conn = await getPool().getConnection();
-  try {
-    // First get the captured_at time for the reference capture
-    const [refRows] = await conn.execute(`
-      SELECT captured_at FROM captures WHERE id = ?
-    `, [captureId]);
-
-    if (refRows.length === 0) return [];
-
-    const capturedAt = refRows[0].captured_at;
-
-    // Get temperature data for 7 days before this capture, sampled every 2 hours
-    const [rows] = await conn.execute(`
-      SELECT
-        DATE_FORMAT(captured_at, '%Y-%m-%d %H:00:00') as hour_bucket,
-        AVG(alicante_temp) as alicante_temp,
-        AVG(bratislava_temp) as bratislava_temp,
-        MAX(captured_at) as captured_at
-      FROM captures
-      WHERE captured_at <= ?
-        AND captured_at >= DATE_SUB(?, INTERVAL 7 DAY)
-        AND alicante_temp IS NOT NULL
-      GROUP BY hour_bucket
-      HAVING HOUR(hour_bucket) % 2 = 0
-      ORDER BY hour_bucket ASC
-    `, [capturedAt, capturedAt]);
-
-    return rows.map(row => ({
-      time: row.captured_at,
-      alicanteTemp: row.alicante_temp,
-      bratislavaTemp: row.bratislava_temp
-    }));
-  } catch (error) {
-    console.error('Error getting temperature history:', error);
-    return [];
-  } finally {
-    conn.release();
-  }
-}
-
-/**
  * Get temperature history for the last 30 days from a given capture
  * Returns sampled data (one point per 6 hours) for chart display
  * @param {number} captureId - The reference capture ID

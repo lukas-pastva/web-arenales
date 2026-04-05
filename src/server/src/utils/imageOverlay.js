@@ -580,11 +580,10 @@ function generateCityPanelSVG(weather, x, y, panelWidth, panelHeight) {
  * @param {Object} options.alicanteWeather - Alicante weather data
  * @param {Object} options.bratislavaWeather - Bratislava weather data
  * @param {string} options.date - Date in YYYY-MM-DD format
- * @param {Array} options.temperatureHistory - Optional 7-day temperature history
  * @param {Array} options.temperatureHistory30 - Optional 30-day temperature history
  * @returns {string} Complete SVG markup for info panels (not including image)
  */
-export function generateHDLayoutSVG({ alicanteWeather, bratislavaWeather, date, temperatureHistory = null, temperatureHistory30 = null }) {
+export function generateHDLayoutSVG({ alicanteWeather, bratislavaWeather, date, temperatureHistory30 = null }) {
   const canvasWidth = 1280;
   const canvasHeight = 720;
   const imageWidth = 800;
@@ -628,12 +627,11 @@ export function generateHDLayoutSVG({ alicanteWeather, bratislavaWeather, date, 
     dayLengthLabel = dayLengthDiff > 0 ? 'Longer in Alicante' : dayLengthDiff < 0 ? 'Longer in Bratislava' : 'Same length';
   }
 
-  // Chart dimensions - two charts stacked in the bottom panel
+  // Chart dimensions - single 30-day chart in the bottom panel
   const chartWidth = 1000;
-  const chartHeight = 130;
+  const chartHeight = 263;
   const chartX = 15;
-  const chart7dY = imageHeight + 3;
-  const chart30dY = imageHeight + chartHeight + 6;
+  const chart30dY = imageHeight + 3;
 
   // Calendar gauge position - right side of bottom panel
   const gaugeSize = 220;
@@ -683,16 +681,10 @@ export function generateHDLayoutSVG({ alicanteWeather, bratislavaWeather, date, 
       <rect x="0" y="${imageHeight}" width="${canvasWidth}" height="${bottomPanelHeight}" fill="rgba(245,208,160,0.05)" />
       <rect x="0" y="${imageHeight}" width="${canvasWidth}" height="2" fill="rgba(255,255,255,0.1)" />
 
-      <!-- 7-day Temperature chart -->
-      ${generateTemperatureChartSVG(temperatureHistory, chartX, chart7dY, chartWidth, chartHeight, {
-        chartId: '7d', title: '7-DAY TEMPERATURE', daysCount: 7,
-        diff, diffSign, diffColor, diffLabel, dayLengthDiffStr, dayLengthColor, dayLengthLabel, showDiffIndicators: true
-      })}
-
       <!-- 30-day Temperature chart -->
       ${generateTemperatureChartSVG(temperatureHistory30, chartX, chart30dY, chartWidth, chartHeight, {
         chartId: '30d', title: '30-DAY TEMPERATURE', daysCount: 30,
-        diff, diffSign, diffColor, diffLabel, dayLengthDiffStr, dayLengthColor, dayLengthLabel, showDiffIndicators: false
+        diff, diffSign, diffColor, diffLabel, dayLengthDiffStr, dayLengthColor, dayLengthLabel, showDiffIndicators: true
       })}
 
       <!-- Calendar gauge (right side) -->
@@ -739,7 +731,6 @@ export async function applyOverlayToBuffer(imageBuffer, weatherData, date, optio
     alicanteWeather,
     bratislavaWeather,
     date,
-    temperatureHistory: options.temperatureHistory || null,
     temperatureHistory30: options.temperatureHistory30 || null
   });
 
