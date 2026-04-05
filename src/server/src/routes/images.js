@@ -45,26 +45,22 @@ router.get('/data/:id/overlay', async (req, res) => {
     // Get current settings
     const settings = getOverlaySettings();
 
-    // Fetch temperature history if chart is enabled
-    let temperatureHistory30 = null;
-    if (settings.showChart) {
-      temperatureHistory30 = await imageService.getTemperatureHistory30Days(captureId);
-    }
+    // Always fetch temperature history for chart
+    const temperatureHistory30 = await imageService.getTemperatureHistory30Days(captureId);
 
-    // Apply overlay to image with options
+    // Apply overlay to image with chart always enabled
     const overlayedImage = await applyOverlayToBuffer(
       captureData.imageData,
       captureData.weather,
       captureData.date,
       {
-        showChart: settings.showChart,
+        showChart: true,
         temperatureHistory30
       }
     );
 
     res.set('Content-Type', 'image/jpeg');
-    // Use shorter cache when chart is enabled (data changes)
-    const cacheTime = settings.showChart ? 60 : 31536000;
+    const cacheTime = 60;
     res.set('Cache-Control', `public, max-age=${cacheTime}`);
     res.send(overlayedImage);
   } catch (error) {
@@ -189,8 +185,8 @@ router.get('/settings', (req, res) => {
 // Update overlay settings
 router.put('/settings', express.json(), (req, res) => {
   try {
-    const { showChart, sunriseOffsetMinutes, sunsetOffsetMinutes } = req.body;
-    const update = { showChart: Boolean(showChart) };
+    const { sunriseOffsetMinutes, sunsetOffsetMinutes } = req.body;
+    const update = {};
     if (sunriseOffsetMinutes !== undefined) update.sunriseOffsetMinutes = Number(sunriseOffsetMinutes) || 0;
     if (sunsetOffsetMinutes !== undefined) update.sunsetOffsetMinutes = Number(sunsetOffsetMinutes) || 0;
     const updatedSettings = updateOverlaySettings(update);

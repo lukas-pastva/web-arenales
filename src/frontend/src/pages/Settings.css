@@ -231,7 +231,8 @@ input:disabled + .toggle-slider {
 /* Admin buttons */
 .admin-buttons {
   display: flex;
-  gap: var(--space-md);
+  flex-direction: column;
+  gap: var(--space-sm);
 }
 
 .admin-button {
