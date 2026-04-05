@@ -7,9 +7,11 @@ import DaylightVideos from './pages/DaylightVideos';
 import Combined24hVideos from './pages/Combined24hVideos';
 import CombinedDaylightVideos from './pages/CombinedDaylightVideos';
 import Settings from './pages/Settings';
+import { useTheme } from './hooks/useTheme';
 import './App.css';
 
 function App() {
+  useTheme();
   return (
     <BrowserRouter>
       <div className="app">

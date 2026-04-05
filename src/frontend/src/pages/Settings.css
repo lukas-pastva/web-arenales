@@ -64,6 +64,68 @@
   line-height: 1.5;
 }
 
+/* Theme Picker */
+.theme-picker {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
+}
+
+.theme-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: var(--space-md) var(--space-sm);
+  background: var(--surface-3);
+  border: 2px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out),
+              background var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
+}
+
+.theme-option:hover {
+  border-color: var(--border-hover);
+  background: var(--surface-4);
+  color: var(--text-primary);
+}
+
+.theme-option.active {
+  border-color: var(--accent);
+  background: var(--accent-subtle);
+  color: var(--accent);
+}
+
+.theme-option-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.theme-option-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.theme-option-desc {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+.theme-option.active .theme-option-desc {
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+@media (max-width: 640px) {
+  .theme-picker {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* Number Input */
 .setting-number-input {
   width: 80px;
