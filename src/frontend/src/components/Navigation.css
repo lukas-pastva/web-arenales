@@ -121,6 +121,31 @@
   opacity: 1;
 }
 
+/* ── Theme Button (Sidebar) ── */
+.sidebar-theme-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 0.6rem var(--space-md);
+  margin: var(--space-sm) var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  background: none;
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: background var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
+}
+
+.sidebar-theme-btn:hover {
+  background: var(--surface-3);
+  color: var(--text-primary);
+}
+
 /* ── Bottom Bar (Mobile only) ── */
 .bottombar {
   display: none;

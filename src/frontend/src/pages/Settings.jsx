@@ -1,18 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../hooks/useTheme';
 import './Settings.css';
-
-const themeOptions = [
-  { value: 'light', label: 'Light', icon: '\u2600', desc: 'Sunny sky blue' },
-  { value: 'dark', label: 'Dark', icon: '\u263D', desc: 'Default dark' },
-  { value: 'superdark', label: 'Super Dark', icon: '\u25CF', desc: 'Pure black AMOLED' },
-  { value: 'auto', label: 'Auto', icon: '\u25D1', desc: 'Follow system' },
-];
 
 function Settings() {
   const navigate = useNavigate();
-  const { theme, setTheme } = useTheme();
   const [settings, setSettings] = useState({
     showChart: false,
     sunriseOffsetMinutes: 0,
@@ -106,28 +97,6 @@ function Settings() {
     <div className="settings-page">
       <div className="page-header">
         <h1 className="page-title">Settings</h1>
-      </div>
-
-      <div className="settings-container card">
-        <div className="settings-section">
-          <h2 className="section-title">Theme</h2>
-          <p className="section-description">
-            Choose your preferred appearance.
-          </p>
-          <div className="theme-picker">
-            {themeOptions.map((opt) => (
-              <button
-                key={opt.value}
-                className={`theme-option ${theme === opt.value ? 'active' : ''}`}
-                onClick={() => setTheme(opt.value)}
-              >
-                <span className="theme-option-icon">{opt.icon}</span>
-                <span className="theme-option-label">{opt.label}</span>
-                <span className="theme-option-desc">{opt.desc}</span>
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
 
       <div className="settings-container card">
